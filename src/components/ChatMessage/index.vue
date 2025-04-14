@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import mdi from "./utils";
+
 defineProps<{
   message: {
     role: "user" | "assistant";
     content: string;
   };
 }>();
+// 解析富文本
+const changeVal = (item: { content: string }) => {
+  return mdi.render(item.content);
+};
 </script>
 
 <template>
@@ -14,7 +20,7 @@ defineProps<{
       <span v-else>avatar</span>
     </div>
     <div class="content">
-      <div class="text">{{ message.content }}</div>
+      <div class="text" v-html="changeVal(message)"></div>
     </div>
   </div>
 </template>
