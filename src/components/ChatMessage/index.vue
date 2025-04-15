@@ -1,10 +1,25 @@
 <script setup lang="ts">
-defineProps<{
+import { watch } from "vue";
+import mdi from "./utils";
+
+const props = defineProps<{
   message: {
     role: "user" | "assistant";
     content: string;
   };
 }>();
+// 解析富文本
+const changeVal = (item: { content: string }) => {
+  return mdi.render(item.content);
+};
+
+watch(
+  () => props.message,
+  (newVal) => {
+    console.log("message", newVal);
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -14,7 +29,7 @@ defineProps<{
       <span v-else>avatar</span>
     </div>
     <div class="content">
-      <div class="text">{{ message.content }}</div>
+      <div class="text" v-html="changeVal(message)"></div>
     </div>
   </div>
 </template>

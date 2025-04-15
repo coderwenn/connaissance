@@ -2,3 +2,10 @@
   padding: 0;
   margin: 0;
 }
+
+ol,
+ul {
+  padding-left: 20px;
+  /* 设置合理的缩进 */
+  margin: 0;
+}
