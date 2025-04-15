@@ -6,11 +6,9 @@ import ChatMessage from "../../components/ChatMessage/index.vue";
 const store = useChatStore();
 const inputText = ref("");
 const chatContainer = ref<HTMLElement>();
-
 const sendMessage = async () => {
   if (!inputText.value.trim() || store.isLoading) return;
-
-  await store.sendMessage(inputText.value.trim());
+  store.sendMessage(inputText.value.trim());
   inputText.value = "";
   // 自动滚动到底部
   await nextTick();
@@ -29,7 +27,6 @@ const sendMessage = async () => {
         :key="message.id"
         :message="message"
       />
-
       <div v-if="store.isLoading" class="loading">
         <div class="dot-flashing"></div>
       </div>
@@ -50,7 +47,7 @@ const sendMessage = async () => {
 
 <style scoped>
 .chat-container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   height: 100vh;
   display: flex;
@@ -68,7 +65,7 @@ const sendMessage = async () => {
   position: fixed;
   bottom: 0;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   padding: 1rem;
   background: white;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);

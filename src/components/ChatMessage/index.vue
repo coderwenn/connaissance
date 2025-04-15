@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { watch } from "vue";
 import mdi from "./utils";
 
-defineProps<{
+const props = defineProps<{
   message: {
     role: "user" | "assistant";
     content: string;
@@ -11,6 +12,14 @@ defineProps<{
 const changeVal = (item: { content: string }) => {
   return mdi.render(item.content);
 };
+
+watch(
+  () => props.message,
+  (newVal) => {
+    console.log("message", newVal);
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
