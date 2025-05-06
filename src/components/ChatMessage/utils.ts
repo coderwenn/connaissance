@@ -3,6 +3,7 @@ import mdKatex from "@traptitech/markdown-it-katex";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 
+// md转换为html
 const mdi = new MarkdownIt({
   linkify: true,
   highlight(code, language) {
