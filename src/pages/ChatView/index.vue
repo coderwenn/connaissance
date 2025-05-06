@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ref, nextTick } from "vue";
-import { useChatStore } from "../../core/stores/chat";
-import ChatMessage from "../../components/ChatMessage/index.vue";
+import { useChatStore } from "@/core/stores/chat";
+import ChatMessage from "@/components/ChatMessage/index.vue";
 
 const store = useChatStore();
 const inputText = ref("");
 const chatContainer = ref<HTMLElement>();
+
 const sendMessage = async () => {
   if (!inputText.value.trim() || store.isLoading) return;
   store.sendMessage(inputText.value.trim());
-  inputText.value = "";
+  inputText.value = ""; // 清空输入框
   // 自动滚动到底部
   await nextTick();
   chatContainer.value?.scrollTo({
@@ -22,22 +23,14 @@ const sendMessage = async () => {
 <template>
   <div class="chat-container">
     <div class="messages" ref="chatContainer">
-      <ChatMessage
-        v-for="message in store.messages"
-        :key="message.id"
-        :message="message"
-      />
+      <ChatMessage v-for="message in store.messages" :key="message.id" :message="message" />
       <div v-if="store.isLoading" class="loading">
         <div class="dot-flashing"></div>
       </div>
     </div>
 
     <div class="input-area">
-      <textarea
-        v-model="inputText"
-        @keydown.enter.exact.prevent="sendMessage"
-        placeholder="输入你的问题..."
-      ></textarea>
+      <textarea v-model="inputText" @keydown.enter.exact.prevent="sendMessage" placeholder="输入你的问题..."></textarea>
       <button @click="sendMessage" :disabled="store.isLoading">
         {{ store.isLoading ? "生成中..." : "发送" }}
       </button>
@@ -110,9 +103,11 @@ button {
   0% {
     opacity: 0.2;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.2;
   }
